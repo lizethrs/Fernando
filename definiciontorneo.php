@@ -38,6 +38,7 @@ include('conexion.php');
 </html>
 <?php
 if (isset($_POST['guardar'])) {
+        session_start();
     $tipo = $_POST['tipo'];
     $equipos = $_POST["equipos"];
     $nombre = $_POST['nombre'];
@@ -48,7 +49,8 @@ if (isset($_POST['guardar'])) {
 
             $query = mysql_query("INSERT INTO tb_torneo (id,tipo,Nombre,Deporte) VALUES (NULL,'$tipo','$nombre','1')");
             if ($query) {
-
+         $nuevo = mysql_fetch_array(mysql_query("SELECT id FROM tb_torneo WHERE Nombre='$nombre' and tipo='$tipo'"));
+                $_SESSION['torneo']=$nuevo['id'];
                 header("location:principal.php");
             } else {
                 echo "Error";
@@ -62,7 +64,8 @@ if (isset($_POST['guardar'])) {
             $tipo = $_POST['tipo'];
             $query = mysql_query("INSERT INTO tb_torneo (id,tipo,Nombre,Deporte) VALUES (NULL,'$tipo','$nombre','1')");
             if ($query) {
-
+                $nuevo = mysql_fetch_array(mysql_query("SELECT id FROM tb_torneo WHERE Nombre='$nombre' and tipo='$tipo'"));
+                $_SESSION['torneo']=$nuevo['id'];
                 header("location:principal.php");
             } else {
                 echo "Error";

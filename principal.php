@@ -1,5 +1,6 @@
 <?php
 include('conexion.php');
+session_start();
 ?>
 <html>
     <body>
@@ -21,7 +22,10 @@ include('conexion.php');
             <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Equipos</a></li>
             <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Partidos</a></li>
         </ul>
-
+<!-- ----------------------------------------------------------->
+             <!-- ---------------------------JUGADORES -------------------------------->
+              <!-- ----------------------------------------------------------->
+             
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="home">
                 <div class="row">
@@ -32,6 +36,7 @@ include('conexion.php');
                             </div>
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2">
+                       
                                     <h2 style="">Nuevo jugador</h2><hr>
                                 </div>
                             </div>
@@ -107,6 +112,10 @@ include('conexion.php');
                         </form>
                     </div></div>
             </div>
+            <!-- ----------------------------------------------------------->
+             <!-- ---------------------------EQUIPOS -------------------------------->
+              <!-- ----------------------------------------------------------->
+             
             <div role="tabpanel" class="tab-pane" id="profile">
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
@@ -146,6 +155,11 @@ include('conexion.php');
                         </form>
                     </div></div>
             </div>
+            <!-- ----------------------------------------------------------->
+             <!-- ---------------------------PARTIDOS -------------------------------->
+              <!-- ----------------------------------------------------------->
+             
+            
             <div role="tabpanel" class="tab-pane" id="messages">
                     <div class="row">
                     <div class="col-md-10 col-md-offset-1">
@@ -201,7 +215,14 @@ include('conexion.php');
                                 </div>
                                 <div class="col-md-4"> 
                                     <label>Lugar</label>
-                                    <input type="text" class="form-control" name="lugar" style="">
+                                    <select name="lugar" class="form-control" >
+                                       
+                                       
+                                         <option value="Cancha1">Cancha1</option>
+                                          <option value="Cancha2">Cancha2</option>
+                                           <option value="Cancha3">Cancha3</option>
+                                        
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -251,13 +272,17 @@ if (isset($_POST["guardar"])) {
     }
 }
 if (isset($_POST["enviar"])) {
+                $torneo=  $_SESSION['torneo'];
     $nombre = $_POST["nombre"];
     $tecnico = $_POST["tecnico"];
-    $query = mysql_query("INSERT INTO tb_equipos (id_equipo,Nombre,Tecnico,torneo) VALUES (NULL,'$nombre','$tecnico','1')");
+    $query = mysql_query("INSERT INTO tb_equipos (id_equipo,Nombre,Tecnico,torneo) VALUES (NULL,'$nombre','$tecnico','$torneo')");
     if ($query) {
         ?>
+        
         <script>alert("Agregado con éxito");</script>
+        
         <?php
+
     } else {
         echo "Error";
     }
@@ -267,7 +292,8 @@ if (isset($_POST["ir"])) {
     $equipo2 = $_POST["equipo2"];
     $fecha = $_POST["fecha"];
     $lugar = $_POST["lugar"];
-    $query = mysql_query("INSERT INTO tb_partidos (equipo1,equipo2,resultado1,resultado2,fecha,lugar,estado,id) VALUES ('$equipo1', '$equipo2','0','0','$fecha','$lugar','Programado',NULL");
+    $query = mysql_query("INSERT INTO tb_partidos (equipo1,equipo2,resultado1,resultado2,fecha,lugar,estado,id) "
+            . "VALUES ('$equipo1', '$equipo2','0','0','$fecha','$lugar','Programado',NULL");
     if ($query) {
         ?>
         <script>alert("Agregado con éxito");</script>
