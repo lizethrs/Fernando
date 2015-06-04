@@ -16,9 +16,9 @@ if(mysql_num_rows($primero)>0){
     $nuevo=  mysql_fetch_array($primero);
      $_SESSION['torneo']=$nuevo['torneo'];
     header("location:principal.php");  
-}
+}else{
     header("location:definiciontorneo.php");  
-}
+}}
   
 
 ?>

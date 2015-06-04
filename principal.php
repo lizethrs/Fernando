@@ -1,6 +1,9 @@
 <?php
 include('conexion.php');
 session_start();
+ $torneo=  $_SESSION['torneo'];
+ $query = mysql_query("SELECT * FROM tb_torneo WHERE id='$torneo'");
+ $nombre=  mysql_fetch_array($query);
 ?>
 <html>
     <body>
@@ -11,9 +14,10 @@ session_start();
         <link rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap-theme.min.css">
         <script src="bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     </head>
-    <center><label style="color:#27AE60;font-size: 30px;">Aplicación de torneos Fernando</label></center>
+    <center><label style="color:#27AE60;font-size: 30px;">Aplicación de torneos</label></center>
+      <center><label style="color:#27AE60;font-size: 30px;"><?php echo $nombre['Nombre']?></label></center>
 
-    <a href="index_1.php" style="float:right;margin-right: 10px">Salir</a>
+    <a href="index.php" style="float:right;margin-right: 10px">Salir</a>
     <br><br>
     <div role="tabpanel">
 
@@ -78,7 +82,7 @@ session_start();
 
                                     <select class="form-control" style="" name="equipo">
                                         <?php
-                                        $equipos = mysql_query("SELECT * from tb_equipos ORDER BY Nombre asc");
+                                        $equipos = mysql_query("SELECT * from tb_equipos  where torneo='$torneo'  ORDER BY Nombre asc");
                                         while ($listaequipos = mysql_fetch_array($equipos)) {
                                             ?>
                                             <option value="<?php echo $listaequipos['id_equipo']; ?>"><?php echo $listaequipos['Nombre']; ?> </option>
@@ -178,7 +182,7 @@ session_start();
 
                                     <select class="form-control" style="" name="equipo1">
                                         <?php
-                                        $equipos = mysql_query("SELECT * from tb_equipos ORDER BY Nombre asc");
+                                        $equipos = mysql_query("SELECT * from tb_equipos  where torneo='$torneo'  ORDER BY Nombre asc");
                                         while ($listaequipos = mysql_fetch_array($equipos)) {
                                             ?>
                                             <option value="<?php echo $listaequipos['id_equipo']; ?>"><?php echo $listaequipos['Nombre']; ?> </option>
@@ -193,7 +197,7 @@ session_start();
 
                                     <select class="form-control" style="" name="equipo2">
                                         <?php
-                                        $equipos = mysql_query("SELECT * from tb_equipos ORDER BY Nombre asc");
+                                        $equipos = mysql_query("SELECT * from tb_equipos  where torneo='$torneo'  ORDER BY Nombre asc");
                                         while ($listaequipos = mysql_fetch_array($equipos)) {
                                             ?>
                                             <option value="<?php echo $listaequipos['id_equipo']; ?>"><?php echo $listaequipos['Nombre']; ?> </option>
@@ -277,7 +281,7 @@ if (isset($_POST["enviar"])) {
     $tecnico = $_POST["tecnico"];
     $query = mysql_query("INSERT INTO tb_equipos (id_equipo,Nombre,Tecnico,torneo) VALUES (NULL,'$nombre','$tecnico','$torneo')");
     if ($query) {
-        ?>
+        ?> 
         
         <script>alert("Agregado con éxito");</script>
         
